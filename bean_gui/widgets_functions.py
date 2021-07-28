@@ -15,3 +15,4 @@ class DisplayButton:
         file=tkf.askopenfilename(initialdir = os.getcwd(),title = "Select file",filetypes = (("csv","*.csv"),("all files","*.*")))
         self.df=pd.read_csv(file)
         print(self.df)
+

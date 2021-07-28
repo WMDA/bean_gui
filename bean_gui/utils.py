@@ -61,6 +61,7 @@ def set_style(root,style='awdark'):
     style  
 
     '''
+    os.chdir("..")
     styles_path = os.path.abspath('styles')
     style = ttk.Style(root)
     root.tk.eval(f"""set base_theme_dir {styles_path}/awthemes-10.4.0
@@ -72,4 +73,4 @@ def set_style(root,style='awdark'):
     [list source [file join $base_theme_dir {ttk_style}.tcl]]
     """)
     root.tk.call("package", "require", ttk_style)
-    return style.theme_use('awdark')
+    return style.theme_use(ttk_style)
