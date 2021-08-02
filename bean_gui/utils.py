@@ -1,10 +1,21 @@
-import tkinter as tk
+import tkinter as tk  #Due to numerous imports importing as tkinter as tk allows to keep track what is from tkinter and what isn't
 from tkinter import ttk
 import os
 
-class TextRedirect:
+class StdoutRedirect:
     '''
-    Class to redirect stdout to widget
+    Class used to redirect stdout to widget. 
+    Used with widgets that accept text
+
+    Usage:
+
+    import sys
+    sys.stdout=TextRedirect(widget)
+
+    Parameters
+    -----------------------
+    widget : tk.widget object
+
     '''
     def __init__(self,widget):
         self.widget = widget
@@ -18,7 +29,7 @@ def window_size(root,size='Full_screen'):
     
     '''
     Function to resize window. Default is
-    full screen. Takes a turple that that divides width 
+    full screen. Takes a turple that divides width 
     and height by to produce new window dimentions
     
     Parameters
@@ -61,8 +72,8 @@ def set_style(root,style='awdark'):
     style  
 
     '''
-    os.chdir("..")
-    styles_path = os.path.abspath('styles')
+
+    styles_path = os.path.abspath('styles') #todo find a more robust way to find the 'styles' folder. currently only works if in bean_gui directory
     style = ttk.Style(root)
     root.tk.eval(f"""set base_theme_dir {styles_path}/awthemes-10.4.0
     package ifneeded awthemes 10.4.0 \
