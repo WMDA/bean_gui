@@ -28,5 +28,5 @@ class Window:
         
     def window(self,root,size):
         w_size=window_size(root,size)
-        frame=ttk.Frame(master=root,width=w_size['width'], height=w_size['height'])
+        frame=ttk.Frame(master=root,width=w_size['width'], height=w_size['height'],cursor='spider')
         frame.pack(fill=tk.BOTH,expand=True)
