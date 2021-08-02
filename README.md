@@ -1,3 +1,7 @@
-# bean_gui
+# Bean GUI
 
-GUI for bean. Working progress
+GUI written in python/tkinter as a wrapper around statistical functions.
+
+![Logo](https://github.com/WMDA/bean_gui/blob/main/styles/bean_logo/bean_smaller.png)
+
+
