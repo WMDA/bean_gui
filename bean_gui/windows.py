@@ -5,7 +5,7 @@ from utils import window_size, set_style
 class Window:
     
     '''
-    Base class for window.
+    Base class for Bean windows.
     
     Usage:
     from windows import Window
@@ -17,7 +17,7 @@ class Window:
     Parameters
     ----------------------
     root: tk.Tk() object
-    size: turple int optional. Default behaviour is the full screen
+    size: turple int optional. Default behaviour is full screen
 
     Returns 
     -----------------------
@@ -32,21 +32,29 @@ class Window:
         
     def window(self,root,size):
         w_size=window_size(root,size)
-        frame=ttk.Frame(master=root,width=w_size['width'], height=w_size['height'],cursor='center_ptr')
+        frame=ttk.Frame(master=root,width=w_size['width'], height=w_size['height'],cursor='hand1')
         frame.pack(fill=tk.BOTH,expand=True)
     
     def menu(self,root):
-        self.menu_bar=tk.Menu(root, activebackground='green',cursor='hand1',tearoff=1,bg='purple',fg='black')
+        self.menu_bar=tk.Menu(root, activebackground='green',tearoff=0,bg='purple',fg='black')
         
         #File button
-        self.file_button=tk.Menu(self.menu_bar,cursor='hand1',tearoff=0,background='black',foreground='white')
-        self.file_button.add_command(label='Open')
+        self.file_button=tk.Menu(self.menu_bar,tearoff=0,background='black',foreground='white')
+        self.file_button.add_command(label='Open Data')
+        self.file_button.add_cascade(label='Open Bean file')
         self.file_button.add_command(label='Close',command=root.destroy)
-        self.menu_bar.add_cascade(label='File',menu=self.file_button,)
+        self.menu_bar.add_cascade(label='File',menu=self.file_button)
         self.file_button.add_separator()
 
+        #View button
+        self.help_button=tk.Menu(self.menu_bar,tearoff=0,background='black',foreground='white')
+        self.help_button.add_command(label='View Source Code')
+        self.help_button.add_command(label='View Markdown')
+        self.menu_bar.add_cascade(label='View',menu=self.help_button)
+        self.help_button.add_separator()
+
         #Help button
-        self.help_button=tk.Menu(self.menu_bar,cursor='hand1',tearoff=1,background='black',foreground='white')
+        self.help_button=tk.Menu(self.menu_bar,tearoff=0,background='black',foreground='white')
         self.help_button.add_command(label='Help')
         self.menu_bar.add_cascade(label='Help',menu=self.help_button)
         self.help_button.add_separator()
