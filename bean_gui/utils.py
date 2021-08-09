@@ -34,7 +34,7 @@ def window_size(root,size='Full_screen'):
     
     Parameters
     -----------
-    root : Tk() object
+    root : tk object, window
     size : turple of two int , optional 
          First element is int to divde width by 
          second elment is int to divide height by
@@ -55,6 +55,26 @@ def window_size(root,size='Full_screen'):
         height = root.winfo_screenheight()/size[1]
         spec={'width':width ,'height':height}
         return spec
+
+def get_window_size(root):
+     
+     '''
+    Function to get window size.
+    
+    Parameters
+    -----------
+    root : tk object, window
+
+    Returns
+    ----------
+    Dictionary of width and value dimensions 
+
+    '''
+
+    width = root.winfo_screenwidth()
+    height = root.winfo_screenheight()
+    size={'width':width ,'height':height}
+    return size
     
 def set_style(root,style='awdark'):
     ttk_style=style
