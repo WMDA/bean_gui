@@ -23,35 +23,34 @@ class Window:
 
     def __init__(self, size='Full_screen'):
         root_intialiser=self.root_window(size)
-        root=self.root
-        w_size=window_size(root,size)
-        self.root.geometry(f"{int(w_size['width'])}x{int(w_size['height'])}")
-        style=set_style(root)
-        file_button=self.menu(root)
-        window_frame=self.window(root,w_size['height'],w_size['width'])
-        root.mainloop()
+        style=set_style(self.root)
+        file_button=self.menu(self.root)
+        window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])
+        self.root.mainloop()
         
     def root_window(self,size):
         self.root=tk.Tk()
         self.root.overrideredirect(True)
         self.winsize=current_size(self.root)
-        self.check=window_size(self.root,size)
+        self.w_size=window_size(self.root,size)
         title_bar = ttk.Frame(self.root)
         text=ttk.Label(title_bar,text='BEAN',padding=3)
         close_button = ttk.Button(title_bar, text='X', command=self.root.destroy,cursor='hand1', width=3)
-        resize=ttk.Button(title_bar, text='□', command=self.resize_window,cursor='hand1', width=3)
+        max=ttk.Button(title_bar, text='□', command=self.max_window,cursor='hand1', width=3)
+        min=ttk.Button(title_bar, text='-', command=self.min_window,cursor='hand1', width=3)
         title_bar.pack(fill=tk.X,side=tk.TOP,expand=True)
         close_button.pack(side=tk.RIGHT)
-        resize.pack(side=tk.RIGHT)
+        max.pack(side=tk.RIGHT)
+        min.pack(side=tk.RIGHT)
         text.pack(side=tk.BOTTOM)
         title_bar.bind('<B1-Motion>', self.move_window)
-        self.root.resizable(True, True)
+        self.root.geometry(f"{int(self.w_size['width'])}x{int(self.w_size['height'])}")
 
-    def resize_window(self):
-        if (self.check['width'] and self.check['height'])==(self.winsize['width'] and self.winsize['height']):
-            self.root.geometry(f"{int(self.winsize['width']/2)}x{int(self.winsize['height']/2)}")
-        else:
-            self.root.geometry(f"{int(self.winsize['width'])}x{int(self.winsize['height'])}")
+    def min_window(self):
+        self.root.geometry(f"{int(self.winsize['width']/2)}x{int(self.winsize['height']/2)}")
+        
+    def max_window(self):
+        self.root.geometry(f"{int(self.winsize['width'])}x{int(self.winsize['height'])}")
        
     def window(self,root,height,width):
         self.frame=tk.Frame(root,height=height,width=width,bg='grey10')
