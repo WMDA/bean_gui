@@ -56,9 +56,9 @@ def window_size(root,size='Full_screen'):
         spec={'width':width ,'height':height}
         return spec
 
-def get_window_size(root):
+def current_size(root):
      
-     '''
+    '''
     Function to get window size.
     
     Parameters
