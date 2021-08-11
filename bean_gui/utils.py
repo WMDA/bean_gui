@@ -1,4 +1,3 @@
-import tkinter as tk  #Due to numerous imports importing as tkinter as tk allows to keep track what is from tkinter and what isn't
 from tkinter import ttk
 import os
 

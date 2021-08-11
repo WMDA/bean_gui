@@ -44,8 +44,6 @@ class Window:
         min.pack(side=tk.RIGHT)
         text.pack(side=tk.BOTTOM)
         title_bar.bind('<B1-Motion>', self.move_window)
-        title_bar.bind('<Motion>', self.max_window)
-        title_bar.bind('<Motion>', self.min_window)
         self.root.geometry(f"{int(self.w_size['width'])}x{int(self.w_size['height'])}")
 
     def min_window(self):
