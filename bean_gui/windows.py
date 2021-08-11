@@ -54,7 +54,7 @@ class Window:
        
     def window(self,root,height,width):
         self.frame=tk.Frame(root,height=height,width=width,bg='grey10')
-        self.frame.pack(fill=tk.BOTH,expand=True,side=tk.LEFT)
+        self.frame.pack(fill=tk.BOTH,expand=True)
 
     def move_window(self,event):
            self.root.geometry(f'+{event.x_root}+{event.y_root}')
@@ -93,3 +93,23 @@ class Window:
         help_menu.add_separator()
         help_button["menu"] = help_menu
         help_button.pack(side=tk.LEFT)
+
+
+class Landing_page(Window):
+    def __init__(self, size='Full_screen'):
+        root_intialiser=self.root_window(size)
+        style=set_style(self.root)
+        self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])
+        buttons=self.buttons()
+        self.root.mainloop()
+
+
+    def buttons(self):
+        data=ttk.Button(self.frame,cursor='hand1',text='Open Data',padding=10)
+        new_bean_project=ttk.Button(self.frame,cursor='hand1',text='Create a New Bean Project',padding=10)
+        old_bean_project=ttk.Button(self.frame,cursor='hand1',text='Open a Bean Project',padding=10)
+
+        data.pack(side=tk.LEFT,padx=10,pady=10) 
+        new_bean_project.pack(side=tk.LEFT)
+        old_bean_project.pack(side=tk.LEFT)
+        

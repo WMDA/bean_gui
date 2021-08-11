@@ -3,9 +3,10 @@ Base script for bean.
 
 '''
 
-from windows import Window
+from windows import Landing_page,Window
 
-Window()
+
+Landing_page(size=(2,2))
 
 
 
