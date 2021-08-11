@@ -38,12 +38,14 @@ class Window:
         close_button = ttk.Button(title_bar, text='X', command=self.root.destroy,cursor='hand1', width=3)
         max=ttk.Button(title_bar, text='□', command=self.max_window,cursor='hand1', width=3)
         min=ttk.Button(title_bar, text='-', command=self.min_window,cursor='hand1', width=3)
-        title_bar.pack(fill=tk.X,side=tk.TOP,expand=True)
+        title_bar.pack(fill=tk.X,side=tk.TOP)
         close_button.pack(side=tk.RIGHT)
         max.pack(side=tk.RIGHT)
         min.pack(side=tk.RIGHT)
         text.pack(side=tk.BOTTOM)
         title_bar.bind('<B1-Motion>', self.move_window)
+        title_bar.bind('<Motion>', self.max_window)
+        title_bar.bind('<Motion>', self.min_window)
         self.root.geometry(f"{int(self.w_size['width'])}x{int(self.w_size['height'])}")
 
     def min_window(self):
@@ -61,7 +63,7 @@ class Window:
     
     def menu(self,root):
         menu=tk.Frame(root,bg='purple4')
-        menu.pack(fill=tk.BOTH,expand=True)
+        menu.pack(fill=tk.BOTH)
         
         #File button
         file_button=ttk.Menubutton(menu,text='File',cursor='hand1')
