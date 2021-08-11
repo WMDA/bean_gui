@@ -91,7 +91,9 @@ def set_style(root,style='awdark'):
     style  
 
     '''
-
+    location=os.getcwd()
+    if '/bean_gui/' in location:
+        os.chdir('..')
     styles_path = os.path.abspath('styles') #todo find a more robust way to find the 'styles' folder. currently only works if in bean_gui directory
     style = ttk.Style(root)
     root.tk.eval(f"""set base_theme_dir {styles_path}/awthemes-10.4.0
