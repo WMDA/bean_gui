@@ -108,8 +108,16 @@ class Landing_page(Window):
         data=ttk.Button(self.frame,cursor='hand1',text='Open Data',padding=10)
         new_bean_project=ttk.Button(self.frame,cursor='hand1',text='Create a New Bean Project',padding=10)
         old_bean_project=ttk.Button(self.frame,cursor='hand1',text='Open a Bean Project',padding=10)
+        help=ttk.Button(self.frame,cursor='hand1',text='Help',padding=10)
+        credit=ttk.Button(self.frame,cursor='hand1',text='Credits',padding=10)
+        close=ttk.Button(self.frame,cursor='hand1',text='Close',padding=10,command=self.root.destroy)
 
-        data.pack(side=tk.LEFT,padx=10,pady=10) 
-        new_bean_project.pack(side=tk.LEFT)
-        old_bean_project.pack(side=tk.LEFT)
+
+        data.pack(side=tk.TOP,pady=50,expand=True) 
+        new_bean_project.pack(side=tk.TOP,pady=50,expand=True)
+        old_bean_project.pack(side=tk.TOP,pady=50,expand=True)
+        help.pack(side=tk.TOP,pady=50,expand=True)
+        credit.pack(side=tk.TOP,pady=50,expand=True)
+        close.pack(side=tk.TOP,pady=50,expand=True)
+
         
