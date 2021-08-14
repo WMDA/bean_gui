@@ -3,6 +3,7 @@ from tkinter import messagebox
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 import pandas as pd
 
+
 global_data = {}
 
 def open_file():
