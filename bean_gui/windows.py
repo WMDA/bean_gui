@@ -1,6 +1,7 @@
 import tkinter as tk #Due to numerous imports importing as tkinter as tk allows to keep track what is from tkinter and what isn't
 from tkinter import ttk
 from utils import current_size, window_size, set_style
+from button_functions import load_web_page
 
 class Window:
     
@@ -13,11 +14,13 @@ class Window:
     Window(root,size=(2,3))
 
     Parameters
-    ----------------------
-    size: turple int optional. Default behaviour is full screen
+    --------------------------------
+    size: turple int optional. 
+    Default behaviour is full screen
 
     Returns 
-    -----------------------
+    --------------------------------
+    
     Window Class
     '''
 
@@ -34,7 +37,7 @@ class Window:
         self.winsize=current_size(self.root)
         self.w_size=window_size(self.root,size)
         title_bar = ttk.Frame(self.root)
-        text=ttk.Label(title_bar,text='BEAN',padding=3)
+        text=ttk.Label(title_bar,text='BEAN',padding=3,justify='center')
         close_button = ttk.Button(title_bar, text='X', command=self.root.destroy,cursor='hand1', width=3)
         max=ttk.Button(title_bar, text='□', command=self.max_window,cursor='hand1', width=3)
         min=ttk.Button(title_bar, text='-', command=self.min_window,cursor='hand1', width=3)
@@ -100,24 +103,28 @@ class Landing_page(Window):
         root_intialiser=self.root_window(size)
         style=set_style(self.root)
         self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])
+        self.bar_frame=ttk.Frame(self.frame)
+        self.bar_frame.pack(side=tk.LEFT,fill=tk.Y)
         buttons=self.buttons()
         self.root.mainloop()
 
 
     def buttons(self):
-        data=ttk.Button(self.frame,cursor='hand1',text='Open Data',padding=10)
-        new_bean_project=ttk.Button(self.frame,cursor='hand1',text='Create a New Bean Project',padding=10)
-        old_bean_project=ttk.Button(self.frame,cursor='hand1',text='Open a Bean Project',padding=10)
-        help=ttk.Button(self.frame,cursor='hand1',text='Help',padding=10)
-        credit=ttk.Button(self.frame,cursor='hand1',text='Credits',padding=10)
-        close=ttk.Button(self.frame,cursor='hand1',text='Close',padding=10,command=self.root.destroy)
+        data=ttk.Button(self.bar_frame,cursor='hand1',text='Open Data',padding=10)
+        new_bean_project=ttk.Button(self.bar_frame,cursor='hand1',text='New Bean Project',padding=10)
+        old_bean_project=ttk.Button(self.bar_frame,cursor='hand1',text='Open BEAN project',padding=10)
+        help=ttk.Button(self.bar_frame,cursor='hand1',text='Help',padding=10,command=lambda: load_web_page('https://github.com/WMDA/bean_gui'))
+        contribute=ttk.Button(self.bar_frame,cursor='hand1',text='Contribute',padding=10, command=lambda: load_web_page('https://github.com/WMDA/bean_gui'))
+        credit=ttk.Button(self.bar_frame,cursor='hand1',text='Credits',padding=10)
+        close=ttk.Button(self.bar_frame,cursor='hand1',text='Close',padding=10,command=self.root.destroy)
 
 
-        data.pack(side=tk.TOP,pady=50,expand=True) 
-        new_bean_project.pack(side=tk.TOP,pady=50,expand=True)
-        old_bean_project.pack(side=tk.TOP,pady=50,expand=True)
-        help.pack(side=tk.TOP,pady=50,expand=True)
-        credit.pack(side=tk.TOP,pady=50,expand=True)
-        close.pack(side=tk.TOP,pady=50,expand=True)
+        data.pack(side=tk.TOP,expand=True) 
+        new_bean_project.pack(side=tk.TOP,expand=True)
+        old_bean_project.pack(side=tk.TOP,expand=True)
+        help.pack(side=tk.TOP,expand=True)
+        credit.pack(side=tk.TOP,expand=True)
+        contribute.pack(side=tk.TOP,expand=True)
+        close.pack(side=tk.TOP,expand=True)
 
         
