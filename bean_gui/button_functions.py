@@ -51,4 +51,20 @@ def load_web_page(url):
     '''
     import webbrowser
     webbrowser.open(url)
-        
+
+def open_new_window(root,window):
+    '''
+    Opens a new window destroying the old one.
+
+    Parameters
+    ---------------------
+    root: tk.Tk() object
+    window: A window object to open.
+
+    Returns
+    --------------------
+    window object
+    '''
+
+    root.destroy()
+    window()

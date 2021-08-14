@@ -47,13 +47,11 @@ def window_size(root,size='Full_screen'):
     if size =='Full_screen':
         width = root.winfo_screenwidth()
         height = root.winfo_screenheight()
-        spec={'width':width ,'height':height}
-        return spec
     else:
         width = root.winfo_screenwidth() /size[0]
         height = root.winfo_screenheight()/size[1]
-        spec={'width':width ,'height':height}
-        return spec
+    spec={'width':int(width) ,'height':int(height)}
+    return spec
 
 def current_size(root):
      

@@ -1,7 +1,7 @@
 import tkinter as tk #Due to numerous imports importing as tkinter as tk allows to keep track what is from tkinter and what isn't
 from tkinter import ttk
 from utils import current_size, window_size, set_style
-from button_functions import load_web_page
+from button_functions import load_web_page, open_new_window
 
 class Window:
     
@@ -32,6 +32,23 @@ class Window:
         self.root.mainloop()
         
     def root_window(self,size):
+        '''
+        Function to create customise root window.
+        BEAN has own title bar with close button, min
+        and max buttons. This is to reduce variation across 
+        os and gives BEAN a disinct look and feel.
+
+        Parameters
+        ---------------------------------------------------
+        self: self parameter
+        size: turple int optional. 
+        Default behaviour is full screen
+        
+        Returns
+        ---------------------------------------------------
+        Customised root window (a tk.Tk() object) 
+        '''
+
         self.root=tk.Tk()
         self.root.overrideredirect(True)
         self.winsize=current_size(self.root)
@@ -47,13 +64,13 @@ class Window:
         min.pack(side=tk.RIGHT)
         text.pack(side=tk.BOTTOM)
         title_bar.bind('<B1-Motion>', self.move_window)
-        self.root.geometry(f"{int(self.w_size['width'])}x{int(self.w_size['height'])}")
+        self.root.geometry(f"{self.w_size['width']}x{self.w_size['height']}")
 
     def min_window(self):
         self.root.geometry(f"{int(self.winsize['width']/2)}x{int(self.winsize['height']/2)}")
         
     def max_window(self):
-        self.root.geometry(f"{int(self.winsize['width'])}x{int(self.winsize['height'])}")
+        self.root.geometry(f"{self.winsize['width']}x{self.winsize['height']}")
        
     def window(self,root,height,width):
         self.frame=tk.Frame(root,height=height,width=width,bg='grey10')
@@ -63,6 +80,16 @@ class Window:
            self.root.geometry(f'+{event.x_root}+{event.y_root}')
     
     def menu(self,root):
+        '''
+        Function to create a menu bar.
+        Includes File, view and help button.
+
+        Parameters
+        ------------------------------------
+        self: self
+        root: tk.Tk() object
+        '''
+
         menu=tk.Frame(root,bg='purple4')
         menu.pack(fill=tk.BOTH)
         
@@ -72,7 +99,11 @@ class Window:
         file_menu=tk.Menu(tkmenu,tearoff=0,background='grey16',foreground='white')
         file_menu.add_separator()
         file_menu.add_command(label='Open Data')
+        file_menu.add_command(label='New Bean file')
         file_menu.add_command(label='Open Bean file')
+        file_menu.add_command(label='Credits')
+        file_menu.add_command(label='Contribute',command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
+        file_menu.add_command(label='Back to Main Page',command=lambda:open_new_window(self.root,Landing_page))
         file_menu.add_command(label='Close',command=self.root.destroy)
         file_menu.add_separator()
         file_button["menu"] = file_menu
@@ -92,13 +123,36 @@ class Window:
         help_button=ttk.Menubutton(menu,text='Help',cursor='hand1')
         help_menu=tk.Menu(tkmenu,tearoff=0,background='grey16',foreground='white')
         help_menu.add_separator()
-        help_menu.add_command(label='Help')
+        help_menu.add_command(label='Help',command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
+        help_menu.add_command(label='Report bug',command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui/issues')))
         help_menu.add_separator()
         help_button["menu"] = help_menu
         help_button.pack(side=tk.LEFT)
 
 
 class Landing_page(Window):
+
+    '''
+    Opening window for BEAN. 
+    Inherents functionality from 
+    Windows base class minus menu bar
+    
+    Usage:
+    from windows import Window
+
+    Window(size=(2,3))
+
+    Parameters
+    --------------------------------
+    size: turple int optional. 
+    Default behaviour is full screen
+
+    Returns 
+    --------------------------------
+    
+    Opening page Class
+    '''
+
     def __init__(self, size='Full_screen'):
         root_intialiser=self.root_window(size)
         style=set_style(self.root)
@@ -110,21 +164,23 @@ class Landing_page(Window):
 
 
     def buttons(self):
-        data=ttk.Button(self.bar_frame,cursor='hand1',text='Open Data',padding=10)
+        data=ttk.Button(self.bar_frame,cursor='hand1',text='Open Data',padding=10,command=lambda:open_new_window(self.root,Window))
         new_bean_project=ttk.Button(self.bar_frame,cursor='hand1',text='New Bean Project',padding=10)
         old_bean_project=ttk.Button(self.bar_frame,cursor='hand1',text='Open BEAN project',padding=10)
-        help=ttk.Button(self.bar_frame,cursor='hand1',text='Help',padding=10,command=lambda: load_web_page('https://github.com/WMDA/bean_gui'))
-        contribute=ttk.Button(self.bar_frame,cursor='hand1',text='Contribute',padding=10, command=lambda: load_web_page('https://github.com/WMDA/bean_gui'))
+        help=ttk.Button(self.bar_frame,cursor='hand1',text='Help',padding=10,command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
+        contribute=ttk.Button(self.bar_frame,cursor='hand1',text='Contribute',padding=10, command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
+        report=ttk.Button(self.bar_frame,cursor='hand1',text='Report an issue',padding=10, command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui/issues')))
         credit=ttk.Button(self.bar_frame,cursor='hand1',text='Credits',padding=10)
         close=ttk.Button(self.bar_frame,cursor='hand1',text='Close',padding=10,command=self.root.destroy)
 
 
-        data.pack(side=tk.TOP,expand=True) 
-        new_bean_project.pack(side=tk.TOP,expand=True)
-        old_bean_project.pack(side=tk.TOP,expand=True)
-        help.pack(side=tk.TOP,expand=True)
-        credit.pack(side=tk.TOP,expand=True)
-        contribute.pack(side=tk.TOP,expand=True)
-        close.pack(side=tk.TOP,expand=True)
+        data.pack(side=tk.TOP,expand=True,padx=5) 
+        new_bean_project.pack(side=tk.TOP,expand=True,padx=5)
+        old_bean_project.pack(side=tk.TOP,expand=True,padx=5)
+        help.pack(side=tk.TOP,expand=True,padx=5)
+        credit.pack(side=tk.TOP,expand=True,padx=5)
+        contribute.pack(side=tk.TOP,expand=True,padx=5)
+        report.pack(side=tk.TOP, expand=True,padx=5)
+        close.pack(side=tk.TOP,expand=True,padx=5)
 
         
