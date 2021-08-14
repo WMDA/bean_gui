@@ -21,6 +21,7 @@ class DisplayButton:
     -------------------------
     Widget button that opens 
     file finder.
+    
     '''
 
     def __init__(self,root,widget):
@@ -41,18 +42,18 @@ def load_web_page(url):
     Loads webpage
 
     Parameters
-    -------------------------
-    url : str. url of website 
-    to open
+    --------------------------------
+    url: str, url of website to open
 
     Returns
-    -------------------------
+    --------------------------------
     Website in default browser
     '''
     import webbrowser
     webbrowser.open(url)
 
-def open_new_window(root,window):
+def open_new_window(root,window,size='Full_screen'):
+
     '''
     Opens a new window destroying the old one.
 
@@ -60,6 +61,7 @@ def open_new_window(root,window):
     ---------------------
     root: tk.Tk() object
     window: A window object to open.
+    size: turple int, optional. 
 
     Returns
     --------------------
@@ -67,4 +69,4 @@ def open_new_window(root,window):
     '''
 
     root.destroy()
-    window()
+    window(size)

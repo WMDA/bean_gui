@@ -74,7 +74,7 @@ def current_size(root):
     return size
     
 def set_style(root,style='awdark'):
-    ttk_style=style
+    
     '''
     Function to set style. Default is
     awdark. 
@@ -82,13 +82,14 @@ def set_style(root,style='awdark'):
     Parameters
     -----------
     root : Tk() object
-    size : str optional
-        sets style
+    style: str optional. Default is awdark
+
     Returns
     ----------
     style  
 
     '''
+    ttk_style=style
     location=os.getcwd()
     if '/bean_gui/' in location:
         os.chdir('..')
