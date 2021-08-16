@@ -47,13 +47,11 @@ def window_size(root,size='Full_screen'):
     if size =='Full_screen':
         width = root.winfo_screenwidth()
         height = root.winfo_screenheight()
-        spec={'width':width ,'height':height}
-        return spec
     else:
         width = root.winfo_screenwidth() /size[0]
         height = root.winfo_screenheight()/size[1]
-        spec={'width':width ,'height':height}
-        return spec
+    spec={'width':int(width) ,'height':int(height)}
+    return spec
 
 def current_size(root):
      
@@ -76,7 +74,7 @@ def current_size(root):
     return size
     
 def set_style(root,style='awdark'):
-    ttk_style=style
+    
     '''
     Function to set style. Default is
     awdark. 
@@ -84,13 +82,14 @@ def set_style(root,style='awdark'):
     Parameters
     -----------
     root : Tk() object
-    size : str optional
-        sets style
+    style: str optional. Default is awdark
+
     Returns
     ----------
     style  
 
     '''
+    ttk_style=style
     location=os.getcwd()
     if '/bean_gui/' in location:
         os.chdir('..')

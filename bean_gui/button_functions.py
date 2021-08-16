@@ -13,13 +13,15 @@ class DisplayButton:
     Finds csvs and prints the csv to a widget.
 
     Parameters
-    -------------------------------
+    -------------------------
     root : tk.TK() object
     widget : tk.widget object
 
     Return
-    ------------------------------
-    Widget button that opens file finder.
+    -------------------------
+    Widget button that opens 
+    file finder.
+    
     '''
 
     def __init__(self,root,widget):
@@ -34,4 +36,37 @@ class DisplayButton:
         self.df=pd.read_csv(file)
         print(self.df)
     
-        
+
+def load_web_page(url):
+    '''
+    Loads webpage
+
+    Parameters
+    --------------------------------
+    url: str, url of website to open
+
+    Returns
+    --------------------------------
+    Website in default browser
+    '''
+    import webbrowser
+    webbrowser.open(url)
+
+def open_new_window(root,window,size='Full_screen'):
+
+    '''
+    Opens a new window destroying the old one.
+
+    Parameters
+    ---------------------
+    root: tk.Tk() object
+    window: A window object to open.
+    size: turple int, optional. 
+
+    Returns
+    --------------------
+    window object
+    '''
+
+    root.destroy()
+    window(size)
