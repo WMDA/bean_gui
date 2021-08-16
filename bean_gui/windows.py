@@ -188,10 +188,9 @@ class Block_window(Window):
         root_intialiser=self.root_window(size)
         style=set_style(self.root)
         file_button=self.menu(self.root)
-        self.frame=tk.Frame(self.root,height=self.w_size['height'],width=self.w_size['width'],bg='grey10')
-        self.frame.pack(fill=tk.BOTH,expand=True)
+        self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])
         self.grid=16
-        label=tk.Label(self.frame,text='Hello',bg='white')
+        label=ttk.Label(self.frame,text='Hello')#,bg='white')
         label.pack(expand=True,side=tk.TOP)
         self.make_draggable(label)
         self.root.mainloop()
