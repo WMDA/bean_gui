@@ -28,7 +28,7 @@ class Window:
         root_intialiser=self.root_window(size)
         style=set_style(self.root)
         file_button=self.menu(self.root)
-        window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])
+        self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])
         self.root.mainloop()
         
     def root_window(self,size):
@@ -182,5 +182,3 @@ class Landing_page(Window):
         contribute.pack(side=tk.TOP,expand=True,padx=5)
         report.pack(side=tk.TOP, expand=True,padx=5)
         close.pack(side=tk.TOP,expand=True,padx=5)
-
-        
