@@ -154,12 +154,12 @@ class Landing_page(Window):
     '''
 
     def __init__(self, size='Full_screen'):
-        root_intialiser=self.root_window(size)
-        style=set_style(self.root)
+        self.root_intialiser=self.root_window(size)
+        self.style=set_style(self.root)
         self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])
         self.bar_frame=ttk.Frame(self.frame)
         self.bar_frame.pack(side=tk.LEFT,fill=tk.Y)
-        buttons=self.buttons()
+        self.side_buttons=self.buttons()
         self.root.mainloop()
 
 
@@ -182,3 +182,38 @@ class Landing_page(Window):
         contribute.pack(side=tk.TOP,expand=True,padx=5)
         report.pack(side=tk.TOP, expand=True,padx=5)
         close.pack(side=tk.TOP,expand=True,padx=5)
+
+class Block_window(Window):
+    def __init__(self, size='Full_screen'):
+        root_intialiser=self.root_window(size)
+        style=set_style(self.root)
+        file_button=self.menu(self.root)
+        self.frame=tk.Frame(self.root,height=self.w_size['height'],width=self.w_size['width'],bg='grey10')
+        self.frame.pack(fill=tk.BOTH,expand=True)
+        self.grid=16
+        label=tk.Label(self.frame,text='Hello',bg='white')
+        label.pack(expand=True,side=tk.TOP)
+        self.make_draggable(label)
+        self.root.mainloop()
+
+    def make_draggable(self,widget):
+        widget.bind("<Button-1>", self.on_drag_start)
+        widget.bind("<B1-Motion>", self.on_drag_motion)
+        widget.bind("<ButtonRelease-1>", self.on_drag_release)
+
+    def on_drag_start(self,event):
+        widget = event.widget
+        widget._drag_start_x = event.x
+        widget._drag_start_y = event.y
+        
+    def on_drag_motion(self,event):
+        widget = event.widget
+        x = widget.winfo_x() - widget._drag_start_x + event.x
+        y = widget.winfo_y() - widget._drag_start_y + event.y
+        widget.place(x=x, y=y)
+        
+    def on_drag_release(self,event):
+        widget = event.widget
+        x = round((widget.winfo_x() - widget._drag_start_x + event.x) / self.grid) * self.grid
+        y = round((widget.winfo_y() - widget._drag_start_y + event.y) / self.grid) * self.grid
+        widget.place(x=x, y=y)
