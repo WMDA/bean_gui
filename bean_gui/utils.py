@@ -2,9 +2,9 @@ from tkinter import ttk
 import os
 
 class StdoutRedirect:
+
     '''
-    Class used to redirect stdout to widget. 
-    Used with widgets that accept text
+    Class used to redirect stdout to widget. Used with widgets that accept text.
 
     Usage:
 
@@ -12,7 +12,7 @@ class StdoutRedirect:
     sys.stdout=TextRedirect(widget)
 
     Parameters
-    -----------------------
+    ----------
     widget : tk.widget object
 
     '''
@@ -27,9 +27,7 @@ class StdoutRedirect:
 def window_size(root,size='Full_screen'):
     
     '''
-    Function to resize window. Default is
-    full screen. Takes a turple that divides width 
-    and height by to produce new window dimentions
+    Function to resize window. Default is full screen. Takes a turple that divides width and height by to produce new window dimentions
     
     Parameters
     -----------
@@ -39,7 +37,7 @@ def window_size(root,size='Full_screen'):
          second elment is int to divide height by
 
     Returns
-    ----------
+    -------
     Dictionary of width and value dimensions 
 
     '''
@@ -76,8 +74,7 @@ def current_size(root):
 def set_style(root,style='awdark'):
     
     '''
-    Function to set style. Default is
-    awdark. 
+    Function to set style. Default is awdark. 
     
     Parameters
     -----------
@@ -85,15 +82,16 @@ def set_style(root,style='awdark'):
     style: str optional. Default is awdark
 
     Returns
-    ----------
+    -------
     style  
 
     '''
     ttk_style=style
+    #In case base.py is run not in root folder but in the /bean_gui/bean_gui folder
     location=os.getcwd()
     if '/bean_gui/' in location:
         os.chdir('..')
-    styles_path = os.path.abspath('styles') #todo find a more robust way to find the 'styles' folder. currently only works if in bean_gui directory
+    styles_path = os.path.abspath('styles')
     style = ttk.Style(root)
     root.tk.eval(f"""set base_theme_dir {styles_path}/awthemes-10.4.0
     package ifneeded awthemes 10.4.0 \

@@ -9,18 +9,16 @@ from utils import StdoutRedirect, set_style
 class DisplayButton:
 
     '''
-    Class to create a display button that when clicks opens a file finder. 
-    Finds csvs and prints the csv to a widget.
+    Class to create a display button that when clicks opens a file finder. Finds csvs and prints the csv to a widget.
 
     Parameters
-    -------------------------
+    ----------
     root : tk.TK() object
     widget : tk.widget object
 
     Return
-    -------------------------
-    Widget button that opens 
-    file finder.
+    ------
+    Widget button that opens file finder.
     
     '''
 
@@ -38,15 +36,16 @@ class DisplayButton:
     
 
 def load_web_page(url):
+    
     '''
     Loads webpage
 
     Parameters
-    --------------------------------
+    ----------
     url: str, url of website to open
 
     Returns
-    --------------------------------
+    -------
     Website in default browser
     '''
     import webbrowser
@@ -58,13 +57,13 @@ def open_new_window(root,window,size='Full_screen'):
     Opens a new window destroying the old one.
 
     Parameters
-    ---------------------
+    ----------
     root: tk.Tk() object
     window: A window object to open.
     size: turple int, optional. 
 
     Returns
-    --------------------
+    -------
     window object
     '''
 

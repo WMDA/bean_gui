@@ -14,12 +14,12 @@ class Window:
     Window(root,size=(2,3))
 
     Parameters
-    --------------------------------
+    ----------
     size: turple int optional. 
-    Default behaviour is full screen
+          Default behaviour is full screen
 
     Returns 
-    --------------------------------
+    -------
     
     Window Class
     '''
@@ -32,20 +32,19 @@ class Window:
         self.root.mainloop()
         
     def root_window(self,size):
+
         '''
-        Function to create customise root window.
-        BEAN has own title bar with close button, min
-        and max buttons. This is to reduce variation across 
+        Function to create customise root window. BEAN has own title bar with close button, min and max buttons. This is to reduce variation across 
         os and gives BEAN a disinct look and feel.
 
         Parameters
-        ---------------------------------------------------
+        ----------
         self: self parameter
         size: turple int optional. 
-        Default behaviour is full screen
+              Default behaviour is full screen
         
         Returns
-        ---------------------------------------------------
+        -------
         Customised root window (a tk.Tk() object) 
         '''
 
@@ -64,9 +63,9 @@ class Window:
         min.pack(side=tk.RIGHT)
         text.pack(side=tk.BOTTOM)
         title_bar.bind('<B1-Motion>', self.move_window)
-        self.root.geometry(f"{self.w_size['width']}x{self.w_size['height']}")
+        self.root.geometry(f"{self.w_size['width']}x{self.w_size['height']}") #todo create ability to drag and resize root window
 
-    def min_window(self):
+    def min_window(self): #todo create a minimize button to minimize screen to titel bar
         self.root.geometry(f"{int(self.winsize['width']/2)}x{int(self.winsize['height']/2)}")
         
     def max_window(self):
@@ -80,14 +79,18 @@ class Window:
            self.root.geometry(f'+{event.x_root}+{event.y_root}')
     
     def menu(self,root):
+
         '''
-        Function to create a menu bar.
-        Includes File, view and help button.
+        Function to create a menu bar. Includes File, view and help button.
 
         Parameters
-        ------------------------------------
+        ----------
         self: self
         root: tk.Tk() object
+
+        Returns
+        -------
+        Frame for Menu
         '''
 
         menu=tk.Frame(root,bg='purple4')
@@ -133,9 +136,7 @@ class Window:
 class Landing_page(Window):
 
     '''
-    Opening window for BEAN. 
-    Inherents functionality from 
-    Windows base class minus menu bar
+    Opening window for BEAN. Inherents functionality from  Windows base class minus menu bar
     
     Usage:
     from windows import Window
@@ -143,12 +144,12 @@ class Landing_page(Window):
     Window(size=(2,3))
 
     Parameters
-    --------------------------------
+    ----------
     size: turple int optional. 
-    Default behaviour is full screen
+          Default behaviour is full screen
 
     Returns 
-    --------------------------------
+    -------
     
     Opening page Class
     '''
@@ -162,6 +163,19 @@ class Landing_page(Window):
 
 
     def bar(self):
+
+        '''
+        Function to create side bar with functional buttons, load data
+        open bean project, new bean project, help, report a bug and close.
+
+        Parameters
+        ----------
+        self: self parameter
+
+        Returns
+        -------
+        Side bar with functional buttons
+        '''
         bar_frame=ttk.Frame(self.frame)
         bar_frame.pack(side=tk.LEFT,fill=tk.Y)
 
@@ -192,10 +206,9 @@ class Landing_page(Window):
 class Block_window(Window):
 
     '''
-    Main BEAN page. Creates blocks
-    to be used  
-    Inherents functionality from 
-    Windows base class minus menu bar
+    Main BEAN page. Creates block to be used to chain statistical tests together.
+
+    Inherents functionality from Windows base
     
     Usage:
     from windows import Block_window
@@ -203,12 +216,12 @@ class Block_window(Window):
     Block_window(size=(2,3))
 
     Parameters
-    --------------------------------
+    ----------
     size: turple int optional. 
-    Default behaviour is full screen
+          Default behaviour is full screen
 
     Returns 
-    --------------------------------
+    -------
     
     Block window
     '''
@@ -237,9 +250,9 @@ class Block_window(Window):
     def block(self,txt):
         self.label=tk.Label(self.frame,text=txt,height=10, width=20,bg='purple4',fg='black',cursor='plus',font='14')
         self.label.pack(expand=True,side=tk.TOP)
-        self.drag_and_drop(self.label)
+        self.drag_and_drop(self.label) #todo stop blocks from being able to be placed on side bar
 
-    def delete(self):
+    def delete(self): #todo this function currently doesn't work.
         self.label.destroy
 
     def drag_and_drop(self,widget):
