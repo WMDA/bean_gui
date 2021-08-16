@@ -157,51 +157,85 @@ class Landing_page(Window):
         self.root_intialiser=self.root_window(size)
         self.style=set_style(self.root)
         self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])
-        self.bar_frame=ttk.Frame(self.frame)
-        self.bar_frame.pack(side=tk.LEFT,fill=tk.Y)
-        self.side_buttons=self.buttons()
+        self.side_buttons=self.bar()
         self.root.mainloop()
 
 
-    def buttons(self):
+    def bar(self):
+        bar_frame=ttk.Frame(self.frame)
+        bar_frame.pack(side=tk.LEFT,fill=tk.Y)
+
         data=ttk.Button(self.bar_frame,cursor='hand1',text='Open Data',padding=10,command=lambda:open_new_window(self.root,Window))
-        new_bean_project=ttk.Button(self.bar_frame,cursor='hand1',text='New Bean Project',padding=10,command=lambda:open_new_window(self.root,Block_window))
-        old_bean_project=ttk.Button(self.bar_frame,cursor='hand1',text='Open BEAN project',padding=10)
-        help=ttk.Button(self.bar_frame,cursor='hand1',text='Help',padding=10,command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
-        contribute=ttk.Button(self.bar_frame,cursor='hand1',text='Contribute',padding=10, command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
-        report=ttk.Button(self.bar_frame,cursor='hand1',text='Report an issue',padding=10, command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui/issues')))
-        credit=ttk.Button(self.bar_frame,cursor='hand1',text='Credits',padding=10)
-        close=ttk.Button(self.bar_frame,cursor='hand1',text='Close',padding=10,command=self.root.destroy)
-
-
         data.pack(side=tk.TOP,expand=True,padx=5) 
+
+        new_bean_project=ttk.Button(self.bar_frame,cursor='hand1',text='New Bean Project',padding=10,command=lambda:open_new_window(self.root,Block_window))
         new_bean_project.pack(side=tk.TOP,expand=True,padx=5)
+
+        old_bean_project=ttk.Button(self.bar_frame,cursor='hand1',text='Open BEAN project',padding=10)
         old_bean_project.pack(side=tk.TOP,expand=True,padx=5)
+
+        help=ttk.Button(self.bar_frame,cursor='hand1',text='Help',padding=10,command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
         help.pack(side=tk.TOP,expand=True,padx=5)
-        credit.pack(side=tk.TOP,expand=True,padx=5)
+
+        contribute=ttk.Button(self.bar_frame,cursor='hand1',text='Contribute',padding=10, command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
         contribute.pack(side=tk.TOP,expand=True,padx=5)
+
+        report=ttk.Button(self.bar_frame,cursor='hand1',text='Report an issue',padding=10, command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui/issues')))
         report.pack(side=tk.TOP, expand=True,padx=5)
+
+        credit=ttk.Button(self.bar_frame,cursor='hand1',text='Credits',padding=10)
+        credit.pack(side=tk.TOP,expand=True,padx=5)
+
+        close=ttk.Button(self.bar_frame,cursor='hand1',text='Close',padding=10,command=self.root.destroy)
         close.pack(side=tk.TOP,expand=True,padx=5)
 
 class Block_window(Window):
+
+    '''
+    Main BEAN page. Creates blocks
+    to be used  
+    Inherents functionality from 
+    Windows base class minus menu bar
+    
+    Usage:
+    from windows import Block_window
+
+    Block_window(size=(2,3))
+
+    Parameters
+    --------------------------------
+    size: turple int optional. 
+    Default behaviour is full screen
+
+    Returns 
+    --------------------------------
+    
+    Block window
+    '''
+
     def __init__(self, size='Full_screen'):
         self.root_intialiser=self.root_window(size)
         self.style=set_style(self.root)
         self.file_button=self.menu(self.root)
         self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])
-        self.bar_frame=ttk.Frame(self.frame)
-        self.bar_frame.pack(side=tk.RIGHT,fill=tk.Y)
-        self.side_buttons=self.buttons()     
+        self.side_buttons=self.bar()     
         self.root.mainloop()
     
-    def buttons(self):
-        add_test_block=ttk.Button(self.bar_frame,cursor='hand1',text='Add Test',padding=10,command=lambda:self.block('text'))
-        delete_test_block=ttk.Button(self.bar_frame,cursor='hand1',text='Delete Test',padding=10,command=self.delete)
+    def bar(self):
+        
+        #Creates frame to use as basis for bar
+        bar_frame=ttk.Frame(self.frame)
+        bar_frame.pack(side=tk.RIGHT,fill=tk.Y)
+
+        #Creates an add and delete button
+        add_test_block=ttk.Button(bar_frame,cursor='hand1',text='Add Test',padding=10,command=lambda:self.block('text'))
         add_test_block.pack(side=tk.TOP, expand=True)
+        
+        delete_test_block=ttk.Button(bar_frame,cursor='hand1',text='Delete Test',padding=10,command=self.delete)
         delete_test_block.pack(side=tk.BOTTOM,expand=True)
 
     def block(self,txt):
-        self.label=tk.Label(self.frame,text=txt,height=10, width=20,bg='purple4',fg='white')
+        self.label=tk.Label(self.frame,text=txt,height=10, width=20,bg='purple4',fg='black',cursor='plus',font='14')
         self.label.pack(expand=True,side=tk.TOP)
         self.drag_and_drop(self.label)
 
