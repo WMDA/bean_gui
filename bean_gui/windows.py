@@ -25,9 +25,9 @@ class Window:
     '''
 
     def __init__(self, size='Full_screen'):
-        root_intialiser=self.root_window(size)
-        style=set_style(self.root)
-        file_button=self.menu(self.root)
+        self.root_intialiser=self.root_window(size)
+        self.style=set_style(self.root)
+        self.file_button=self.menu(self.root)
         self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])
         self.root.mainloop()
         
@@ -185,34 +185,38 @@ class Landing_page(Window):
 
 class Block_window(Window):
     def __init__(self, size='Full_screen'):
-        root_intialiser=self.root_window(size)
-        style=set_style(self.root)
-        file_button=self.menu(self.root)
+        self.root_intialiser=self.root_window(size)
+        self.style=set_style(self.root)
+        self.file_button=self.menu(self.root)
         self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])
-        self.grid=16
-        label=ttk.Label(self.frame,text='Hello')#,bg='white')
-        label.pack(expand=True,side=tk.TOP)
-        self.make_draggable(label)
+        self.bar_frame=ttk.Frame(self.frame)
+        self.bar_frame.pack(side=tk.RIGHT,fill=tk.Y)
+        self.side_buttons=self.buttons()     
         self.root.mainloop()
+    
+    def buttons(self):
+        add_test_block=ttk.Button(self.bar_frame,cursor='hand1',text='Add Test',padding=10,command=lambda:self.block('text'))
+        delete_test_block=ttk.Button(self.bar_frame,cursor='hand1',text='Delete Test',padding=10,command=self.delete)
+        add_test_block.pack(side=tk.TOP, expand=True)
+        delete_test_block.pack(side=tk.BOTTOM,expand=True)
 
-    def make_draggable(self,widget):
-        widget.bind("<Button-1>", self.on_drag_start)
-        widget.bind("<B1-Motion>", self.on_drag_motion)
-        widget.bind("<ButtonRelease-1>", self.on_drag_release)
+    def block(self,txt):
+        self.label=tk.Label(self.frame,text=txt,height=10, width=20,bg='purple4',fg='white')
+        self.label.pack(expand=True,side=tk.TOP)
+        self.drag_and_drop(self.label)
 
-    def on_drag_start(self,event):
-        widget = event.widget
-        widget._drag_start_x = event.x
-        widget._drag_start_y = event.y
+    def delete(self):
+        self.label.destroy
+
+    def drag_and_drop(self,widget):
+        widget.bind("<Button-1>", self.start_dragging)
+        widget.bind("<B1-Motion>", self.dragging)
+
+    def start_dragging(self,event):
+        event.widget._drag_start_x = event.x
+        event.widget._drag_start_y = event.y
         
-    def on_drag_motion(self,event):
-        widget = event.widget
-        x = widget.winfo_x() - widget._drag_start_x + event.x
-        y = widget.winfo_y() - widget._drag_start_y + event.y
-        widget.place(x=x, y=y)
-        
-    def on_drag_release(self,event):
-        widget = event.widget
-        x = round((widget.winfo_x() - widget._drag_start_x + event.x) / self.grid) * self.grid
-        y = round((widget.winfo_y() - widget._drag_start_y + event.y) / self.grid) * self.grid
-        widget.place(x=x, y=y)
+    def dragging(self,event):
+        x = event.widget.winfo_x() - event.widget._drag_start_x + event.x
+        y = event.widget.winfo_y() - event.widget._drag_start_y + event.y
+        event.widget.place(x=x, y=y)
