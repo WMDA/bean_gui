@@ -102,7 +102,7 @@ class Window:
         file_menu=tk.Menu(tkmenu,tearoff=0,background='grey16',foreground='white')
         file_menu.add_separator()
         file_menu.add_command(label='Open Data')
-        file_menu.add_command(label='New Bean file')
+        file_menu.add_command(label='New Bean file',command=lambda:open_new_window(self.root,Block_window))
         file_menu.add_command(label='Open Bean file')
         file_menu.add_command(label='Credits')
         file_menu.add_command(label='Contribute',command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
@@ -179,28 +179,28 @@ class Landing_page(Window):
         bar_frame=ttk.Frame(self.frame)
         bar_frame.pack(side=tk.LEFT,fill=tk.Y)
 
-        data=ttk.Button(self.bar_frame,cursor='hand1',text='Open Data',padding=10,command=lambda:open_new_window(self.root,Window))
+        data=ttk.Button(bar_frame,cursor='hand1',text='Open Data',padding=10,command=lambda:open_new_window(self.root,Window))
         data.pack(side=tk.TOP,expand=True,padx=5) 
 
-        new_bean_project=ttk.Button(self.bar_frame,cursor='hand1',text='New Bean Project',padding=10,command=lambda:open_new_window(self.root,Block_window))
+        new_bean_project=ttk.Button(bar_frame,cursor='hand1',text='New Bean Project',padding=10,command=lambda:open_new_window(self.root,Block_window))
         new_bean_project.pack(side=tk.TOP,expand=True,padx=5)
 
-        old_bean_project=ttk.Button(self.bar_frame,cursor='hand1',text='Open BEAN project',padding=10)
+        old_bean_project=ttk.Button(bar_frame,cursor='hand1',text='Open BEAN project',padding=10)
         old_bean_project.pack(side=tk.TOP,expand=True,padx=5)
 
-        help=ttk.Button(self.bar_frame,cursor='hand1',text='Help',padding=10,command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
+        help=ttk.Button(bar_frame,cursor='hand1',text='Help',padding=10,command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
         help.pack(side=tk.TOP,expand=True,padx=5)
 
-        contribute=ttk.Button(self.bar_frame,cursor='hand1',text='Contribute',padding=10, command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
+        contribute=ttk.Button(bar_frame,cursor='hand1',text='Contribute',padding=10, command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
         contribute.pack(side=tk.TOP,expand=True,padx=5)
 
-        report=ttk.Button(self.bar_frame,cursor='hand1',text='Report an issue',padding=10, command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui/issues')))
+        report=ttk.Button(bar_frame,cursor='hand1',text='Report an issue',padding=10, command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui/issues')))
         report.pack(side=tk.TOP, expand=True,padx=5)
 
-        credit=ttk.Button(self.bar_frame,cursor='hand1',text='Credits',padding=10)
+        credit=ttk.Button(bar_frame,cursor='hand1',text='Credits',padding=10)
         credit.pack(side=tk.TOP,expand=True,padx=5)
 
-        close=ttk.Button(self.bar_frame,cursor='hand1',text='Close',padding=10,command=self.root.destroy)
+        close=ttk.Button(bar_frame,cursor='hand1',text='Close',padding=10,command=self.root.destroy)
         close.pack(side=tk.TOP,expand=True,padx=5)
 
 class Block_window(Window):
@@ -241,16 +241,17 @@ class Block_window(Window):
         bar_frame.pack(side=tk.RIGHT,fill=tk.Y)
 
         #Creates an add and delete button
-        add_test_block=ttk.Button(bar_frame,cursor='hand1',text='Add Test',padding=10,command=lambda:self.block('text'))
-        add_test_block.pack(side=tk.TOP, expand=True)
+        add_dataset=ttk.Button(bar_frame,cursor='hand1',text='Add Block',padding=10,command=lambda:self.block('Block'))
+        add_dataset.pack(side=tk.TOP, expand=True)
         
-        delete_test_block=ttk.Button(bar_frame,cursor='hand1',text='Delete Test',padding=10,command=self.delete)
+        delete_test_block=ttk.Button(bar_frame,cursor='hand1',text='Delete',padding=10,command=self.delete)
         delete_test_block.pack(side=tk.BOTTOM,expand=True)
 
     def block(self,txt):
-        self.label=tk.Label(self.frame,text=txt,height=10, width=20,bg='purple4',fg='black',cursor='plus',font='14')
+        self.label=tk.Label(self.frame,text=txt,height=5, width=10,bg='purple4',fg='black',cursor='plus',font='14')
         self.label.pack(expand=True,side=tk.TOP)
         self.drag_and_drop(self.label) #todo stop blocks from being able to be placed on side bar
+        self.click(self.label)
 
     def delete(self): #todo this function currently doesn't work.
         self.label.destroy
@@ -267,3 +268,18 @@ class Block_window(Window):
         x = event.widget.winfo_x() - event.widget._drag_start_x + event.x
         y = event.widget.winfo_y() - event.widget._drag_start_y + event.y
         event.widget.place(x=x, y=y)
+
+    def click(self,widget):
+        widget.bind("<Double-1>", self.define_block)
+
+    def define_block(self,event):
+        Define_block()
+
+        self.drag_and_drop(event.test_frame)
+
+class Define_block(Window):
+    def __init__(self, size=(2,1)):
+        self.root_intialiser=self.root_window(size)
+        self.style=set_style(self.root)
+        self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])   
+        self.root.mainloop()
