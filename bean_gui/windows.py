@@ -50,7 +50,6 @@ class Window:
         '''
 
         self.root=tk.Tk()
-        self.root.overrideredirect(True)
         self.winsize=current_size(self.root)
         self.w_size=window_size(self.root,size)
         title_bar = ttk.Frame(self.root)
