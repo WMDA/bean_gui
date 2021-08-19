@@ -49,7 +49,7 @@ class Window:
         '''
 
         self.root=tk.Tk()
-        self.root.overrideredirect(True)
+        #self.root.overrideredirect(True)
         self.winsize=current_size(self.root)
         self.w_size=window_size(self.root,size)
         title_bar = ttk.Frame(self.root)
@@ -155,12 +155,7 @@ class Landing_page(Window):
     '''
 
     def __init__(self, size='Full_screen'):
-        self.root_intialiser=self.root_window(size)
-        self.style=set_style(self.root)
-        self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])
-        self.side_buttons=self.bar()
-        self.root.mainloop()
-
+        super().__init__(size)
 
     def bar(self):
 
@@ -232,8 +227,7 @@ class Block_window(Window):
         self.file_button=self.menu(self.root)
         self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])
         self.side_buttons=self.bar()     
-        self.root.mainloop()
-    
+
     def bar(self):
         
         #Creates frame to use as basis for bar
@@ -280,4 +274,3 @@ class Define_block(Window):
         self.root_intialiser=self.root_window(size)
         self.style=set_style(self.root)
         self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])   
-        self.root.mainloop()
