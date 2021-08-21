@@ -3,15 +3,11 @@ from tkinter import ttk
 from utils import current_size, window_size, set_style
 from button_functions import load_web_page, open_new_window
 
-class Window:
+class Base_window:
     
     '''
-    Base class for Bean windows.
-    
-    Usage:
-    from windows import Window
-
-    Window(root,size=(2,3))
+    Base class for Bean windows. 
+    Not useable as doesn't have mainloop feature
 
     Parameters
     --------------------------------
@@ -29,7 +25,7 @@ class Window:
         style=set_style(self.root)
         file_button=self.menu(self.root)
         self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])
-        self.root.mainloop()
+        
         
     def root_window(self,size):
         '''
@@ -129,8 +125,12 @@ class Window:
         help_button["menu"] = help_menu
         help_button.pack(side=tk.LEFT)
 
+class Window(Base_window):
+    def __init__(self, size='Full_size'):
+        super().__init__(size=size)
+        self.root.mainloop()
 
-class Landing_page(Window):
+class Landing_page(Base_window):
 
     '''
     Opening window for BEAN. 
@@ -165,7 +165,7 @@ class Landing_page(Window):
 
     def buttons(self):
         data=ttk.Button(self.bar_frame,cursor='hand1',text='Open Data',padding=10,command=lambda:open_new_window(self.root,Window))
-        new_bean_project=ttk.Button(self.bar_frame,cursor='hand1',text='New Bean Project',padding=10)
+        new_bean_project=ttk.Button(self.bar_frame,cursor='hand1',text='New Bean Project',padding=10,command=lambda:open_new_window(self.root,Block_window))
         old_bean_project=ttk.Button(self.bar_frame,cursor='hand1',text='Open BEAN project',padding=10)
         help=ttk.Button(self.bar_frame,cursor='hand1',text='Help',padding=10,command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
         contribute=ttk.Button(self.bar_frame,cursor='hand1',text='Contribute',padding=10, command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
@@ -183,29 +183,74 @@ class Landing_page(Window):
         report.pack(side=tk.TOP, expand=True,padx=5)
         close.pack(side=tk.TOP,expand=True,padx=5)
 
-class Block_window(Window):
+class Block_window(Base_window):
+
+    '''
+    Main BEAN page. Creates block to be used to chain statistical tests together.
+    Inherents functionality from Windows base
+    
+    Usage:
+    from windows import Block_window
+    Block_window(size=(2,3))
+    Parameters
+    ----------
+    size: turple int optional. 
+          Default behaviour is full screen
+    Returns 
+    -------
+    
+    Block window
+    '''
+
     def __init__(self, size='Full_screen'):
-        root_intialiser=self.root_window(size)
-        style=set_style(self.root)
-        file_button=self.menu(self.root)
-        self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])
-        self.grid=16
-        label=ttk.Label(self.frame,text='Hello')#,bg='white')
-        label.pack(expand=True,side=tk.TOP)
-        self.make_draggable(label)
+        super().__init__(size=size)
+        self.side_buttons=self.bar()     
         self.root.mainloop()
-
-    def make_draggable(self,widget):
-        widget.bind("<Button-1>", self.on_drag_start)
-        widget.bind("<B1-Motion>", self.on_drag_motion)
-
-    def on_drag_start(self,event):
-        widget = event.widget
-        widget._drag_start_x = event.x
-        widget._drag_start_y = event.y
+    
+    def bar(self):
         
-    def on_drag_motion(self,event):
-        widget = event.widget
-        x = widget.winfo_x() - widget._drag_start_x + event.x
-        y = widget.winfo_y() - widget._drag_start_y + event.y
-        widget.place(x=x, y=y)
+        #Creates frame to use as basis for bar
+        bar_frame=ttk.Frame(self.frame)
+        bar_frame.pack(side=tk.RIGHT,fill=tk.Y)
+
+        #Creates an add and delete button
+        add_dataset=ttk.Button(bar_frame,cursor='hand1',text='Add Block',padding=10,command=lambda:self.block('Block'))
+        add_dataset.pack(side=tk.TOP, expand=True)
+        
+        delete_test_block=ttk.Button(bar_frame,cursor='hand1',text='Delete',padding=10,command=self.delete)
+        delete_test_block.pack(side=tk.BOTTOM,expand=True)
+
+    def block(self,txt):
+        self.label=tk.Label(self.frame,text=txt,height=5, width=10,bg='purple4',fg='black',cursor='plus',font='14')
+        self.label.pack(expand=True,side=tk.TOP)
+        self.drag_and_drop(self.label) #todo stop blocks from being able to be placed on side bar
+        self.click(self.label)
+
+    def delete(self): #todo this function currently doesn't work.
+        self.label.destroy
+
+    def drag_and_drop(self,widget):
+        widget.bind("<Button-1>", self.start_dragging)
+        widget.bind("<B1-Motion>", self.dragging)
+
+    def start_dragging(self,event):
+        event.widget._drag_start_x = event.x
+        event.widget._drag_start_y = event.y
+        
+    def dragging(self,event):
+        x = event.widget.winfo_x() - event.widget._drag_start_x + event.x
+        y = event.widget.winfo_y() - event.widget._drag_start_y + event.y
+        event.widget.place(x=x, y=y)
+
+    def click(self,widget):
+        widget.bind("<Double-1>", self.define_block)
+
+    def define_block(self,event):
+        Define_block()
+
+class Define_block(Window):
+    def __init__(self, size=(2,1)):
+        self.root_intialiser=self.root_window(size)
+        self.style=set_style(self.root)
+        self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])   
+        self.root.mainloop()
