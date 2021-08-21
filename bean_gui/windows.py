@@ -1,5 +1,5 @@
 import tkinter as tk #Due to numerous imports importing as tkinter as tk allows to keep track what is from tkinter and what isn't
-from tkinter import ttk
+from tkinter import Widget, ttk
 from utils import current_size, window_size, set_style
 from button_functions import load_web_page, open_new_window
 
@@ -225,9 +225,13 @@ class Block_window(Base_window):
         self.label.pack(expand=True,side=tk.TOP)
         self.drag_and_drop(self.label) #todo stop blocks from being able to be placed on side bar
         self.click(self.label)
+        self.delete(self.label)
 
     def delete(self,widget): #todo this function currently doesn't work.
-        widget.bind("<Button-3>", widget.destroy)
+        widget.bind("<Button-3>", self.delete_function)
+        
+    def delete_function(self,event):
+        self.label.destroy()
 
     def drag_and_drop(self,widget):
         widget.bind("<Button-1>", self.start_dragging)
