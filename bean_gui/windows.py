@@ -213,11 +213,12 @@ class Block_window(Base_window):
         bar_frame.pack(side=tk.RIGHT,fill=tk.Y)
 
         #Creates an add and delete button
-        add_dataset=ttk.Button(bar_frame,cursor='hand1',text='Add Block',padding=10,command=lambda:self.block('Block'))
+        add_dataset=ttk.Button(bar_frame,cursor='hand1',text='Add Block',padding=10,command=lambda:self.block('Test'))
         add_dataset.pack(side=tk.TOP, expand=True)
         
-        delete_test_block=ttk.Button(bar_frame,cursor='hand1',text='Delete',padding=10,command=self.delete)
-        delete_test_block.pack(side=tk.BOTTOM,expand=True)
+        #Commented for now as trying to get a right click event to delete a label
+        #delete_test_block=ttk.Button(bar_frame,cursor='hand1',text='Delete',padding=10,command=self.delete)
+        #delete_test_block.pack(side=tk.BOTTOM,expand=True)
 
     def block(self,txt):
         self.label=tk.Label(self.frame,text=txt,height=5, width=10,bg='purple4',fg='black',cursor='plus',font='14')
@@ -225,8 +226,8 @@ class Block_window(Base_window):
         self.drag_and_drop(self.label) #todo stop blocks from being able to be placed on side bar
         self.click(self.label)
 
-    def delete(self): #todo this function currently doesn't work.
-        self.label.destroy
+    def delete(self,widget): #todo this function currently doesn't work.
+        widget.bind("<Button-3>", widget.destroy)
 
     def drag_and_drop(self,widget):
         widget.bind("<Button-1>", self.start_dragging)
