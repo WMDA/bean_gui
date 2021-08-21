@@ -96,7 +96,7 @@ class Base_window:
         file_menu=tk.Menu(tkmenu,tearoff=0,background='grey16',foreground='white')
         file_menu.add_separator()
         file_menu.add_command(label='Open Data')
-        file_menu.add_command(label='New Bean file')
+        file_menu.add_command(label='New Bean file',command=lambda:open_new_window(self.root,Block_window))
         file_menu.add_command(label='Open Bean file')
         file_menu.add_command(label='Credits')
         file_menu.add_command(label='Contribute',command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
@@ -215,42 +215,50 @@ class Block_window(Base_window):
         #Creates an add and delete button
         add_dataset=ttk.Button(bar_frame,cursor='hand1',text='Add Block',padding=10,command=lambda:self.block('Test'))
         add_dataset.pack(side=tk.TOP, expand=True)
-        
-        #Commented for now as trying to get a right click event to delete a label
-        #delete_test_block=ttk.Button(bar_frame,cursor='hand1',text='Delete',padding=10,command=self.delete)
-        #delete_test_block.pack(side=tk.BOTTOM,expand=True)
 
+        load_bean=ttk.Button(bar_frame,cursor='hand1',text='Load Bean Project',padding=10)
+        load_bean.pack(side=tk.TOP, expand=True)
+
+        back=ttk.Button(bar_frame,cursor='hand1',text='Back to main page',padding=10,command=lambda:open_new_window(self.root,Landing_page))
+        back.pack(side=tk.TOP, expand=True)
+        
     def block(self,txt):
         self.label=tk.Label(self.frame,text=txt,height=5, width=10,bg='purple4',fg='black',cursor='plus',font='14')
         self.label.pack(expand=True,side=tk.TOP)
-        self.drag_and_drop(self.label) #todo stop blocks from being able to be placed on side bar
-        self.click(self.label)
-        self.delete(self.label)
-
-    def delete(self,widget): #todo this function currently doesn't work.
-        widget.bind("<Button-3>", self.delete_function)
+        self.block_functions(self.label)
         
-    def delete_function(self,event):
-        self.label.destroy()
+    def block_functions(self,widget): 
 
-    def drag_and_drop(self,widget):
-        widget.bind("<Button-1>", self.start_dragging)
-        widget.bind("<B1-Motion>", self.dragging)
-
-    def start_dragging(self,event):
-        event.widget._drag_start_x = event.x
-        event.widget._drag_start_y = event.y
+        def start_dragging(event):
+            event.widget._drag_start_x = event.x
+            event.widget._drag_start_y = event.y
         
-    def dragging(self,event):
-        x = event.widget.winfo_x() - event.widget._drag_start_x + event.x
-        y = event.widget.winfo_y() - event.widget._drag_start_y + event.y
-        event.widget.place(x=x, y=y)
+        def dragging(event):
+            x = event.widget.winfo_x() - event.widget._drag_start_x + event.x
+            y = event.widget.winfo_y() - event.widget._drag_start_y + event.y
+            event.widget.place(x=x, y=y)
 
-    def click(self,widget):
-        widget.bind("<Double-1>", self.define_block)
+        def define_block(event):
+           Define_block()
 
-    def define_block(self,event):
-        Define_block()
+        def hover(event):
+            self.hover_box=ttk.Label(self.frame,text='Left click to drag \nDouble click to define block \nRight click to delete',font=(14))
+            self.hover_box.pack(side=tk.BOTTOM)
+        
+        def exit(event):
+            self.hover_box.destroy()
+        
+        def delete_function(event):
+            self.hover_box.destroy()
+            self.label.destroy()
+        
+        widget.bind("<Double-1>", define_block)
+        widget.bind("<Button-3>", delete_function)
+        widget.bind("<Button-1>", start_dragging)
+        widget.bind("<B1-Motion>",dragging)  #todo stop blocks from being able to be placed on side bar
+        widget.bind("<Enter>",hover)
+        widget.bind("<Leave>",exit)
+
 
 class Define_block(Window):
     def __init__(self, size=(2,1),window_type='Block'):
