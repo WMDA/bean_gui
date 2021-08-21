@@ -227,7 +227,7 @@ class Block_window(Base_window):
         self.label.pack(expand=True,side=tk.TOP)
         self.block_functions(self.label)
         
-    def block_functions(self,widget): 
+    def block_functions(self,widget): #The event parameter makes this difficult to make into a class that can be imported. Currently works as nested functions 
 
         def start_dragging(event):
             event.widget._drag_start_x = event.x
