@@ -66,6 +66,6 @@ def open_new_window(root,window,size='Full_screen'):
     -------
     window object
     '''
-
+    root.withdraw()
     root.destroy()
     window(size)

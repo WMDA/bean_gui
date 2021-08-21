@@ -20,10 +20,11 @@ class Base_window:
     Window Class
     '''
 
-    def __init__(self, size='Full_screen'):
-        root_intialiser=self.root_window(size)
-        style=set_style(self.root)
-        file_button=self.menu(self.root)
+    def __init__(self, size='Full_screen',window_type='Base'):
+        self.root_intialiser=self.root_window(size)
+        self.style=set_style(self.root)
+        if window_type=='Base':
+            self.file_button=self.menu(self.root)
         self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])
         
         
@@ -126,8 +127,8 @@ class Base_window:
         help_button.pack(side=tk.LEFT)
 
 class Window(Base_window):
-    def __init__(self, size='Full_size'):
-        super().__init__(size=size)
+    def __init__(self, size='Full_size',window_type='Base'):
+        super().__init__(size=size,window_type=window_type)
         self.root.mainloop()
 
 class Landing_page(Base_window):
@@ -153,25 +154,23 @@ class Landing_page(Base_window):
     Opening page Class
     '''
 
-    def __init__(self, size='Full_screen'):
-        self.root_intialiser=self.root_window(size)
-        self.style=set_style(self.root)
-        self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])
-        self.bar_frame=ttk.Frame(self.frame)
-        self.bar_frame.pack(side=tk.LEFT,fill=tk.Y)
+    def __init__(self, size='Full_screen',window_type='Landing'):
+        super().__init__(size=size,window_type=window_type)
         self.side_buttons=self.buttons()
         self.root.mainloop()
 
 
     def buttons(self):
-        data=ttk.Button(self.bar_frame,cursor='hand1',text='Open Data',padding=10,command=lambda:open_new_window(self.root,Window))
-        new_bean_project=ttk.Button(self.bar_frame,cursor='hand1',text='New Bean Project',padding=10,command=lambda:open_new_window(self.root,Block_window))
-        old_bean_project=ttk.Button(self.bar_frame,cursor='hand1',text='Open BEAN project',padding=10)
-        help=ttk.Button(self.bar_frame,cursor='hand1',text='Help',padding=10,command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
-        contribute=ttk.Button(self.bar_frame,cursor='hand1',text='Contribute',padding=10, command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
-        report=ttk.Button(self.bar_frame,cursor='hand1',text='Report an issue',padding=10, command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui/issues')))
-        credit=ttk.Button(self.bar_frame,cursor='hand1',text='Credits',padding=10)
-        close=ttk.Button(self.bar_frame,cursor='hand1',text='Close',padding=10,command=self.root.destroy)
+        bar_frame=ttk.Frame(self.frame)
+        bar_frame.pack(side=tk.LEFT,fill=tk.Y)
+        data=ttk.Button(bar_frame,cursor='hand1',text='Open Data',padding=10,command=lambda:open_new_window(self.root,Window))
+        new_bean_project=ttk.Button(bar_frame,cursor='hand1',text='New Bean Project',padding=10,command=lambda:open_new_window(self.root,Block_window))
+        old_bean_project=ttk.Button(bar_frame,cursor='hand1',text='Open BEAN project',padding=10)
+        help=ttk.Button(bar_frame,cursor='hand1',text='Help',padding=10,command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
+        contribute=ttk.Button(bar_frame,cursor='hand1',text='Contribute',padding=10, command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui')))
+        report=ttk.Button(bar_frame,cursor='hand1',text='Report an issue',padding=10, command=lambda: (self.min_window(),load_web_page('https://github.com/WMDA/bean_gui/issues')))
+        credit=ttk.Button(bar_frame,cursor='hand1',text='Credits',padding=10)
+        close=ttk.Button(bar_frame,cursor='hand1',text='Close',padding=10,command=self.root.destroy)
 
 
         data.pack(side=tk.TOP,expand=True,padx=5) 
@@ -202,8 +201,8 @@ class Block_window(Base_window):
     Block window
     '''
 
-    def __init__(self, size='Full_screen'):
-        super().__init__(size=size)
+    def __init__(self, size='Full_screen',window_type='Base'):
+        super().__init__(size=size,window_type=window_type)
         self.side_buttons=self.bar()     
         self.root.mainloop()
     
@@ -249,8 +248,6 @@ class Block_window(Base_window):
         Define_block()
 
 class Define_block(Window):
-    def __init__(self, size=(2,1)):
-        self.root_intialiser=self.root_window(size)
-        self.style=set_style(self.root)
-        self.window_frame=self.window(self.root,self.w_size['height'],self.w_size['width'])   
+    def __init__(self, size=(2,1),window_type='Block'):
+        super().__init__(size=size,window_type=window_type)
         self.root.mainloop()
