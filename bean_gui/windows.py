@@ -275,6 +275,8 @@ class Block_window(Window):
     def define_block(self,event):
         Define_block()
 
+        self.drag_and_drop(event.test_frame)
+
 class Define_block(Window):
     def __init__(self, size=(2,1)):
         self.root_intialiser=self.root_window(size)
