@@ -239,8 +239,8 @@ class Block_window(Base_window):
             event.widget.place(x=x, y=y)
 
         def define_block(event):
-           Define_block()
-
+            Define_block(self.root)
+ 
         def hover(event):
             self.hover_box=ttk.Label(self.frame,text='Left click to drag \nDouble click to define block \nRight click to delete',font=(14))
             self.hover_box.pack(side=tk.BOTTOM)
@@ -261,6 +261,14 @@ class Block_window(Base_window):
 
 
 class Define_block(Window):
-    def __init__(self, size=(2,1),window_type='Block'):
-        super().__init__(size=size,window_type=window_type)
-        self.root.mainloop()
+    def __init__(self,root):
+        root=root
+        window_top=tk.Toplevel()
+        w_size=window_size(window_top,size=(3,3))
+        window_top.geometry(f"{w_size['width']}x{w_size['height']}")
+        window=ttk.Frame(window_top)
+        window.pack(fill=tk.BOTH,expand=True,side=tk.TOP)
+        window.lift()
+        block_type=ttk.Combobox(window,values=('Dataset, statistical Test, Graph'))
+        block_type.pack(side=tk.TOP)
+        window_top.mainloop()
