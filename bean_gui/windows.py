@@ -1,7 +1,9 @@
 import tkinter as tk #Due to numerous imports importing as tkinter as tk allows to keep track what is from tkinter and what isn't
-from tkinter import Widget, ttk
+from tkinter import Widget, ttk, scrolledtext
+import tkinter
 from utils import current_size, window_size, set_style
 from button_functions import load_web_page, open_new_window
+import pandas as pd
 
 class Base_window:
     
@@ -218,7 +220,7 @@ class Block_window(Base_window):
             'padding': 10
         }
         #Creates an add and delete button
-        create_block = ttk.Button(**bar_config, text='Add Block', command=lambda:self.block('Test'))
+        create_block = ttk.Button(**bar_config, text='Add Block', command= lambda:CreateBlock(self.root) )
         create_block.pack(side=tk.TOP, expand=True)
 
         load_bean=ttk.Button(**bar_config, text='Load Bean Project')
@@ -276,3 +278,43 @@ class Define_block(Window):
         block_type=ttk.Combobox(window,values=('Dataset, statistical Test, Graph'))
         block_type.pack(side=tk.TOP)
         window_top.mainloop()
+
+class CreateBlock(Window):
+    def __init__(self,root):
+        root=root
+        window_top=tk.Toplevel()
+        w_size=window_size(window_top,size=(3,3))
+        window_top.geometry(f"{w_size['width']}x{w_size['height']}")
+        window=ttk.Frame(window_top)
+        window.pack(fill=tk.BOTH,expand=True,side=tk.TOP)
+        window.lift()
+
+        tab_control = ttk.Notebook(window)
+
+        # data tab
+        tab1 = ttk.Frame(tab_control)
+        tab_control.add(tab1, text='Load Data')
+        lbl1 = ttk.Button(tab1, text="choose data", command= lambda:choose_data())
+        lbl1.grid(column=0, row=0)
+
+        txt = scrolledtext.ScrolledText(tab1,width=40,height=10)
+        txt.grid(column=0,row=1)
+
+        # stats tab
+        tab2 = ttk.Frame(tab_control)
+        tab_control.add(tab2, text='Stats')
+        lbl2 = ttk.Label(tab2, text= 'label2')
+        lbl2.grid(column=0, row=0)
+
+        tab_control.pack(expand=1, fill='both')
+
+        def choose_data():
+            file = tk.filedialog.askopenfilename(filetypes = ((".csv","*.csv"),("all files","*.*")))   
+            if '.csv' not in file:
+                print("only csv bitch!")
+            data = pd.read_csv(file)
+            txt.insert(tk.INSERT, f'The number of rows is {data.shape[0]} \n The number of columns is {data.shape[1]} ')
+
+
+            
+            
